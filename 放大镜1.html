@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#smallImg{
+				width:200px;
+				height:200px;
+				position:absolute;
+				left:30px;
+				top:100px;
+				border:1px solid #ccc;
+			}
+			#smallImg img{
+				width:100%;
+				height:100%;
+			}
+			#smallArea{
+				width:100px;
+				height:100px;
+				background: rgba(100,200,200,0.3);
+				position:absolute;
+				left:0;
+				top:0;
+				display: none;
+			}
+			#bigArea{
+				width:300px;
+				height:300px;
+				border:1px solid #ccc;
+				position:absolute;
+				left:260px;
+				top:100px;
+				overflow: hidden;
+				display: none;
+			}
+			#bigImg{
+				width:600px;
+				height:600px;
+				position:absolute;
+				left:0;
+				top:0;
+			}
+		</style>
+		<script type="text/javascript">
+			onload = function(){
+				function $(id){
+					return document.getElementById(id)
+				}
+				$("smallImg").onmousemove = function(e){
+					e = e || event
+					$("smallArea").style.display = "block"
+					$("bigArea").style.display = "block"
+					
+					var x =e.pageX - $("smallImg").offsetLeft - $("smallArea").offsetWidth/2
+					var y =e.pageY - $("smallImg").offsetTop - $("smallArea").offsetHeight/2
+					
+					if(x<0){x=0}
+					else if(x>$("smallImg").offsetWidth - $("smallArea").offsetWidth){
+						x = $("smallImg").offsetWidth - $("smallArea").offsetWidth
+					}
+					if(y<0){y=0}
+					else if(y>$("smallImg").offsetHeight - $("smallArea").offsetHeight){
+						y = $("smallImg").offsetHeight - $("smallArea").offsetHeight
+					}
+					
+					
+					$("smallArea").style.left = x + "px"
+					$("smallArea").style.top = y + "px"
+					
+					var scale = $("bigArea").offsetWidth/$("smallArea").offsetWidth
+					
+					$("bigImg").style.left = -x*scale + "px"
+					$("bigImg").style.top = -y*scale + "px"
+					
+				}
+				$("smallImg").onmouseleave = function(){
+					
+					$("smallArea").style.display = "none"
+					$("bigArea").style.display = "none"
+				}
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div id="smallImg">
+			<img src="images/images2/1_2.jpeg" />
+			<div id="smallArea"></div>
+		</div>
+		<div id="bigArea">
+			<img id="bigImg" src="images/images2/1_3.jpeg" />
+		</div>
+	</body>
+</html>
